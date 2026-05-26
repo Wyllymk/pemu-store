@@ -1,0 +1,27 @@
+{
+  "name": "pemu-theme",
+  "version": "1.0.0",
+  "description": "Pemu Health Supplements — custom WooCommerce theme",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "watch": "vite build --watch",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-legacy": "^5.4.0",
+    "tailwindcss": "^4.3.0",
+    "terser": "^5.31.0",
+    "vite": "^5.4.0"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.1"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

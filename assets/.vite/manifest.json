@@ -1,0 +1,32 @@
+{
+  "assets/js/app.js": {
+    "file": "js/app.js",
+    "name": "js/app",
+    "src": "assets/js/app.js",
+    "isEntry": true
+  },
+  "assets/js/cart.js": {
+    "file": "js/cart.js",
+    "name": "js/cart",
+    "src": "assets/js/cart.js",
+    "isEntry": true
+  },
+  "assets/js/checkout.js": {
+    "file": "js/checkout.js",
+    "name": "js/checkout",
+    "src": "assets/js/checkout.js",
+    "isEntry": true
+  },
+  "assets/js/product-gallery.js": {
+    "file": "js/product-gallery.js",
+    "name": "js/product-gallery",
+    "src": "assets/js/product-gallery.js",
+    "isEntry": true
+  },
+  "assets/js/shop-filters.js": {
+    "file": "js/shop-filters.js",
+    "name": "js/shop-filters",
+    "src": "assets/js/shop-filters.js",
+    "isEntry": true
+  }
+}

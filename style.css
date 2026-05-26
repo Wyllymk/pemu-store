@@ -1,0 +1,20 @@
+/*
+Theme Name:  Pemu Health Supplements
+Theme URI:   https://pemuhealthsupplements.co.ke
+Author:      Pemu Health Supplements
+Author URI:  https://pemuhealthsupplements.co.ke
+Description: Custom WooCommerce theme for Pemu Health Supplements. Mobile-first, dark/light mode, TikTok-optimised.
+Version:     1.0.0
+Requires at least: 6.4
+Tested up to: 6.7
+Requires PHP: 8.1
+WC requires at least: 8.0
+WC tested up to: 9.x
+License:     GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: pemu
+Tags: woocommerce, dark-mode, mobile-first, health, supplements
+*/
+
+/* All CSS lives in assets/css/main.css (compiled Tailwind output). */
+/* This file is intentionally empty except for the theme header. */
