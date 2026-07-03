@@ -5,7 +5,8 @@
  */
 defined('ABSPATH') || exit;
 ?>
-<div class="cart_totals bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden">
+<div
+    class="cart_totals bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden">
 
     <!-- Header -->
     <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-gray-100 dark:bg-slate-800">
@@ -31,7 +32,8 @@ defined('ABSPATH') || exit;
                     <th class="py-3 text-left font-medium text-brand-green text-sm">
                         <?php wc_cart_totals_coupon_label($coupon); ?>
                         <a href="<?php echo esc_url(add_query_arg('remove_coupon',urlencode($code),wc_get_cart_url())); ?>"
-                            class="ml-1 text-red-400 hover:text-red-600 text-xs no-underline" aria-label="Remove coupon">✕</a>
+                            class="ml-1 text-red-400 hover:text-red-600 text-xs no-underline"
+                            aria-label="Remove coupon">✕</a>
                     </th>
                     <td class="py-3 text-right font-semibold text-brand-green text-sm"
                         data-title="<?php echo esc_attr(wc_cart_totals_coupon_label($coupon,false)); ?>">
@@ -80,12 +82,14 @@ defined('ABSPATH') || exit;
         <div class="border-t border-slate-200 dark:border-slate-700 my-4"></div>
 
         <div class="flex items-center justify-between">
-            <span class="font-display font-bold text-lg text-slate-800 dark:text-slate-200"><?php esc_html_e('Total','woocommerce'); ?></span>
+            <span
+                class="font-display font-bold text-lg text-slate-800 dark:text-slate-200"><?php esc_html_e('Total','woocommerce'); ?></span>
             <div class="text-right">
                 <div class="font-display font-extrabold text-2xl text-brand-green">
                     <?php wc_cart_totals_order_total_html(); ?></div>
                 <?php if (WC()->cart->display_prices_including_tax()): ?>
-                <p class="text-[10px] text-slate-500 dark:text-slate-400"><?php esc_html_e('Including tax','woocommerce'); ?></p>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400">
+                    <?php esc_html_e('Including tax','woocommerce'); ?></p>
                 <?php endif; ?>
             </div>
         </div>
@@ -104,10 +108,17 @@ defined('ABSPATH') || exit;
             </a>
         </div>
 
-        <div class="mt-5 pt-5 border-t border-slate-200 dark:border-slate-700 grid grid-cols-3 gap-2 text-center text-[10px] text-slate-500 dark:text-slate-400">
-            <div><div class="text-lg mb-0.5">🔒</div>SSL Secured</div>
-            <div><div class="text-lg mb-0.5">🌿</div>100% Natural</div>
-            <div><div class="text-lg mb-0.5">✅</div>Authentic</div>
+        <div
+            class="mt-5 pt-5 border-t border-slate-200 dark:border-slate-700 grid grid-cols-3 gap-2 text-center text-[10px] text-slate-500 dark:text-slate-400">
+            <div>
+                <div class="text-lg mb-0.5">🔒</div>SSL Secured
+            </div>
+            <div>
+                <div class="text-lg mb-0.5">🌿</div>100% Natural
+            </div>
+            <div>
+                <div class="text-lg mb-0.5">✅</div>Authentic
+            </div>
         </div>
     </div>
 </div>

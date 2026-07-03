@@ -36,7 +36,7 @@ if (!$product instanceof WC_Product) $product = wc_get_product(get_the_ID());
         </div>
 
         <!-- Summary column -->
-        <div class="product-summary p-6 lg:p-10 space-y-6 lg:space-y-8 flex flex-col justify-center" id="product-summary">
+        <div class="product-summary p-6 lg:p-10 space-y-6 lg:space-y-8 flex flex-col justify-start" id="product-summary">
           <?php do_action('woocommerce_single_product_summary'); ?>
           <div class="pt-6 mt-6 border-t border-slate-100 dark:border-slate-700">
             <?php get_template_part('template-parts/components/trust-badges', null, ['compact'=>false]); ?>

@@ -41,8 +41,8 @@ if (!WC()->cart->needs_payment()): ?>
         <?php endif; ?>
       </label>
 
-      <!-- Payment box -->
-      <div class="payment_box payment_method_<?php echo esc_attr($gateway->id); ?> <?php echo $gateway->chosen ? '' : 'hidden'; ?> mt-2 p-4 bg-gray-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+      <!-- Payment box: hidden by default via inline style (beats WC jQuery .show()/.hide()) -->
+      <div class="payment_box payment_method_<?php echo esc_attr($gateway->id); ?> mt-2 p-4 bg-gray-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-sm text-slate-500 dark:text-slate-400 leading-relaxed" style="display:none;">
         <?php $gateway->payment_fields(); ?>
       </div>
     </li>
@@ -88,22 +88,70 @@ if (!WC()->cart->needs_payment()): ?>
 </div>
 
 <script>
-// Show/hide payment box on selection
-document.addEventListener('change', function(e) {
-  if (!e.target.matches('.wc_payment_methods input[type="radio"]')) return;
-  document.querySelectorAll('.payment_box').forEach(function(box) {
-    box.classList.add('hidden');
+/**
+ * pemuHideAllBoxes — forcibly hides every payment_box via inline style.
+ * Using style.display (not a CSS class) so we win over WooCommerce's
+ * jQuery .show() / .hide() which also sets inline style="display:..."
+ */
+function pemuHideAllBoxes() {
+  document.querySelectorAll('#payment .payment_box').forEach(function(box) {
+    box.style.display = 'none';
   });
-  const box = document.querySelector('.payment_method_' + e.target.value + ' .payment_box');
-  if (box) box.classList.remove('hidden');
-  document.querySelectorAll('.wc_payment_method label').forEach(function(label) {
-    label.classList.remove('border-brand-green','bg-brand-green/5');
-    label.classList.add('border-slate-200','dark:border-slate-700');
+}
+
+function pemuUpdateLabels(gatewayId) {
+  // Reset all labels to default border
+  document.querySelectorAll('#payment .wc_payment_method label').forEach(function(label) {
+    label.classList.remove('border-brand-green', 'bg-brand-green/5');
+    label.classList.add('border-slate-200', 'dark:border-slate-700');
   });
-  const parentLi = e.target.closest('.wc_payment_method');
+  // Highlight the selected label
+  var parentLi = document.querySelector('#payment .payment_method_' + gatewayId);
   if (parentLi) {
-    const lbl = parentLi.querySelector('label');
-    if (lbl) { lbl.classList.remove('border-slate-200','dark:border-slate-700'); lbl.classList.add('border-brand-green','bg-brand-green/5'); }
+    var lbl = parentLi.querySelector('label');
+    if (lbl) {
+      lbl.classList.remove('border-slate-200', 'dark:border-slate-700');
+      lbl.classList.add('border-brand-green', 'bg-brand-green/5');
+    }
   }
+}
+
+function pemuShowBox(gatewayId) {
+  var box = document.querySelector('#payment .payment_method_' + gatewayId + ' .payment_box');
+  if (box) box.style.display = 'block';
+}
+
+// ── Initialise on page load ──────────────────────────────────────────
+// 1. Force-hide ALL boxes (overrides WooCommerce's auto-show via jQuery).
+// 2. Highlight the pre-checked label — but show NO box until user picks one.
+(function init() {
+  pemuHideAllBoxes();
+  var checked = document.querySelector('#payment .wc_payment_methods input[type="radio"]:checked');
+  if (checked) pemuUpdateLabels(checked.value);
+
+  // WooCommerce's checkout.js runs asynchronously and may call .show()
+  // after this script runs. Run again after a short delay to win the race.
+  setTimeout(pemuHideAllBoxes, 0);
+  setTimeout(pemuHideAllBoxes, 50);
+  setTimeout(pemuHideAllBoxes, 200);
+})();
+
+// ── User selects a payment method ────────────────────────────────────
+document.addEventListener('change', function(e) {
+  if (!e.target.matches('#payment .wc_payment_methods input[type="radio"]')) return;
+  pemuHideAllBoxes();
+  pemuUpdateLabels(e.target.value);
+  pemuShowBox(e.target.value);
+});
+
+// ── After WooCommerce AJAX refreshes checkout ─────────────────────────
+// Restore highlight but keep boxes hidden — the user must re-select.
+window.addEventListener('wc:updated_checkout', function() {
+  pemuHideAllBoxes();
+  var checked = document.querySelector('#payment .wc_payment_methods input[type="radio"]:checked');
+  if (checked) pemuUpdateLabels(checked.value);
+  // Extra guard — WC reruns its own init after updated_checkout
+  setTimeout(pemuHideAllBoxes, 0);
+  setTimeout(pemuHideAllBoxes, 100);
 });
 </script>

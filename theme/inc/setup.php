@@ -127,6 +127,15 @@ function pemu_clean_head(): void {
 }
 
 // -----------------------------------------------------------------
+// Disable wptexturize — prevents WordPress from converting straight
+// quotes (" ') in Alpine.js x-bind / x-show / x-on attributes into
+// typographic "curly" quotes (", '), which break Alpine's expression
+// parser with "Invalid or unexpected token" errors.
+// This is safe: wptexturize is purely cosmetic for prose content.
+// -----------------------------------------------------------------
+add_filter( 'run_wptexturize', '__return_false' );
+
+// -----------------------------------------------------------------
 // Remove jQuery Migrate (WooCommerce doesn't need it on frontend)
 // -----------------------------------------------------------------
 add_action( 'wp_default_scripts', function( \WP_Scripts $scripts ): void {

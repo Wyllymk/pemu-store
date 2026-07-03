@@ -15,83 +15,6 @@ get_header();
 ?>
 <main id="main-content" class="min-h-screen bg-gray-100 dark:bg-slate-800">
 
-<style>
-/* Minimal check: invalid/valid state overrides (cannot do via filter) */
-.woocommerce-invalid input { border-color: #ef4444 !important; }
-.woocommerce-invalid label { color: #ef4444 !important; }
-.woocommerce-validated input { border-color: #6DB33F !important; }
-/* Checkout coupon form — styled to match theme */
-form.checkout_coupon.woocommerce-form-coupon {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 1rem;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1.25rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem;
-}
-.dark form.checkout_coupon.woocommerce-form-coupon {
-    background: #1e293b;
-    border-color: #334155;
-}
-form.checkout_coupon .form-row-first {
-    flex: 1;
-    min-width: 160px;
-    margin: 0;
-}
-form.checkout_coupon .form-row-last {
-    margin: 0;
-}
-form.checkout_coupon input#coupon_code.input-text {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 0.75rem;
-    border: 1px solid #e2e8f0;
-    background: #f8fafc;
-    font-size: 0.875rem;
-    color: #1e293b;
-    transition: all 0.2s;
-}
-.dark form.checkout_coupon input#coupon_code.input-text {
-    background: #1e293b;
-    border-color: #334155;
-    color: #e2e8f0;
-}
-form.checkout_coupon input#coupon_code.input-text:focus {
-    outline: none;
-    border-color: #6DB33F !important;
-    box-shadow: 0 0 0 3px rgba(109,179,63,0.15);
-}
-.woocommerce form.checkout_coupon button[name="apply_coupon"],
-.woocommerce form.checkout_coupon button.button[name="apply_coupon"] {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 0.375rem !important;
-    padding: 0.75rem 1.5rem !important;
-    border-radius: 0.75rem !important;
-    background: #6DB33F !important;
-    color: #ffffff !important;
-    font-weight: 700 !important;
-    font-size: 0.875rem !important;
-    border: none !important;
-    cursor: pointer !important;
-    transition: all 0.2s !important;
-    white-space: nowrap !important;
-    text-decoration: none !important;
-    box-shadow: 0 4px 6px -1px rgba(109,179,63,0.2) !important;
-}
-.woocommerce form.checkout_coupon button[name="apply_coupon"]:hover,
-.woocommerce form.checkout_coupon button.button[name="apply_coupon"]:hover {
-    background: #559030 !important;
-    color: #ffffff !important;
-    box-shadow: 0 6px 10px -1px rgba(109,179,63,0.3) !important;
-}
-form.checkout_coupon .clear { display: none; }
-</style>
-
     <!-- Progress steps -->
     <div class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
         <div class="max-w-7xl mx-auto px-4 py-5">
@@ -122,8 +45,8 @@ form.checkout_coupon .clear { display: none; }
         <?php do_action('woocommerce_before_checkout_form', $checkout); ?>
 
         <form name="checkout" method="post" class="checkout woocommerce-checkout"
-            action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data"
-            x-data="{...placeOrderBtn, ...checkoutScroll}" x-init="init()">
+            action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data" x-data="placeOrderBtn"
+            x-init="init()">
 
             <div class="grid lg:grid-cols-[1fr_380px] gap-6 items-start">
 
@@ -134,15 +57,18 @@ form.checkout_coupon .clear { display: none; }
                     <?php do_action('woocommerce_checkout_before_customer_details'); ?>
 
                     <!-- Contact -->
-                    <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+                    <section
+                        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+                        <?php if (!is_user_logged_in() && $checkout->is_registration_enabled()): ?>
                         <div class="flex items-center justify-between mb-5">
                             <h2 class="font-display font-bold text-xl text-slate-800 dark:text-slate-200">Contact</h2>
-                            <?php if (!is_user_logged_in() && $checkout->is_registration_enabled()): ?>
+
                             <a href="<?php echo esc_url(wc_get_account_endpoint_url('dashboard')); ?>"
                                 class="text-xs text-brand-green font-semibold hover:underline">Have an account? Log
                                 in</a>
-                            <?php endif; ?>
+
                         </div>
+                        <?php endif; ?>
                         <div id="customer_details">
                             <?php do_action('woocommerce_checkout_billing'); ?>
                         </div>
@@ -153,8 +79,10 @@ form.checkout_coupon .clear { display: none; }
 
                     <!-- Delivery Note -->
                     <?php if (apply_filters('woocommerce_enable_order_notes_field', 'yes' === get_option('woocommerce_enable_order_comments','yes'))): ?>
-                    <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
-                        <h2 class="font-display font-bold text-xl text-slate-800 dark:text-slate-200 mb-4">Delivery Notes <span
+                    <section
+                        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+                        <h2 class="font-display font-bold text-xl text-slate-800 dark:text-slate-200 mb-4">Delivery
+                            Notes <span
                                 class="text-slate-500 dark:text-slate-400 font-normal text-base">(optional)</span></h2>
                         <?php foreach ($checkout->get_checkout_fields('order') as $key => $field): ?>
                         <?php woocommerce_form_field($key, $field, $checkout->get_value($key)); ?>
@@ -170,8 +98,10 @@ form.checkout_coupon .clear { display: none; }
                     <!-- Order review -->
                     <div
                         class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden">
-                        <div class="px-6 py-4 bg-gray-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-                            <h2 class="font-display font-bold text-lg text-slate-800 dark:text-slate-200">Order Summary</h2>
+                        <div
+                            class="px-6 py-4 bg-gray-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+                            <h2 class="font-display font-bold text-lg text-slate-800 dark:text-slate-200">Order Summary
+                            </h2>
                         </div>
                         <div class="p-6" x-data="shippingMethods">
                             <?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
@@ -182,8 +112,10 @@ form.checkout_coupon .clear { display: none; }
                     <!-- Payment -->
                     <div
                         class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden">
-                        <div class="px-6 py-4 bg-gray-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-                            <h2 class="font-display font-bold text-lg text-slate-800 dark:text-slate-200">Payment Method</h2>
+                        <div
+                            class="px-6 py-4 bg-gray-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+                            <h2 class="font-display font-bold text-lg text-slate-800 dark:text-slate-200">Payment Method
+                            </h2>
                         </div>
                         <div class="p-6">
                             <?php do_action('woocommerce_review_order_before_payment'); ?>
@@ -196,7 +128,7 @@ form.checkout_coupon .clear { display: none; }
                     <p class="text-[11px] text-slate-500 dark:text-slate-400 text-center leading-relaxed">
                         By placing your order you agree to our
                         <a href="<?php echo esc_url(get_privacy_policy_url() ?: '#'); ?>"
-                            class="underline hover:text-brand-green">Privacy Policy</a>.
+                            class="underline! hover:text-brand-green">Privacy Policy</a>.
                     </p>
                 </div><!-- /right -->
 

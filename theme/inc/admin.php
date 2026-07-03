@@ -22,6 +22,17 @@ function pemu_register_admin_page(): void {
 }
 
 /**
+ * Enqueue media library scripts on our admin page.
+ */
+add_action( 'admin_enqueue_scripts', 'pemu_admin_enqueue_media' );
+function pemu_admin_enqueue_media( string $hook_suffix ): void {
+	if ( 'toplevel_page_pemu-settings' !== $hook_suffix ) {
+		return;
+	}
+	wp_enqueue_media();
+}
+
+/**
  * Register settings.
  */
 add_action( 'admin_init', 'pemu_register_admin_settings' );

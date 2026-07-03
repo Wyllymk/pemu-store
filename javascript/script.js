@@ -50,7 +50,6 @@ window.Alpine = Alpine;
 	};
 })();
 /* THEME_TOGGLE_END */
-/* THEME_TOGGLE_END */
 
 (function () {
 	if (typeof jQuery !== 'undefined') {
@@ -460,26 +459,27 @@ window.Alpine = Alpine;
 					);
 					document.addEventListener('wc:checkout_error', function () {
 						e.loading = false;
-					});
-				},
-			};
-		});
-
-		Alpine.data('checkoutScroll', function () {
-			return {
-				init: function () {
-					document.addEventListener('wc:checkout_error', function () {
+						// Scroll to first invalid field
 						setTimeout(function () {
-							var e = document.querySelector(
+							var invalidField = document.querySelector(
 								'.woocommerce-invalid input'
 							);
-							if (e)
-								e.scrollIntoView({
+							if (invalidField)
+								invalidField.scrollIntoView({
 									behavior: 'smooth',
 									block: 'center',
 								});
 						}, 150);
 					});
+				},
+			};
+		});
+
+		// Keep checkoutScroll registered for any templates that still reference it directly
+		Alpine.data('checkoutScroll', function () {
+			return {
+				init: function () {
+					// Scroll logic now handled inside placeOrderBtn; this is a no-op alias.
 				},
 			};
 		});

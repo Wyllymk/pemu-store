@@ -28,9 +28,17 @@ function pemu_ventures_comment_form_defaults( $defaults ) {
 	// Adjust height of comment form.
 	$defaults['comment_field'] = preg_replace( '/rows="\d+"/', 'rows="5"', $comment_field );
 
+	// Fix submit button label for product reviews
+	$defaults['label_submit'] = __( 'Submit Review', 'pemu-ventures' );
+
+	// Add a wrapper class for better styling
+	$defaults['class_submit'] = 'submit-review-btn';
+
 	return $defaults;
 }
 add_filter( 'comment_form_defaults', 'pemu_ventures_comment_form_defaults' );
+
+
 
 /**
  * Filters the default archive titles.
