@@ -1,0 +1,49 @@
+/**
+ * Custom styles to immediately follow Tailwind’s `utilities` layer
+ *
+ * Add your own utility classes to this theme. Complex utility classes should
+ * be added using Tailwind’s plugin system:
+ *
+ * https://tailwindcss.com/docs/adding-custom-styles#adding-custom-utilities
+ */
+[x-cloak] {
+	display: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+	}
+}
+
+@layer utilities {
+	/* Grid / List toggle */
+	.pemu-list-view li {
+		grid-column: 1 / -1;
+		display: flex !important;
+		flex-direction: row !important;
+	}
+	.pemu-list-view li .block.relative.aspect-square {
+		width: 180px !important;
+		min-height: 180px !important;
+		flex-shrink: 0;
+	}
+	.pemu-list-view li .flex.flex-col.flex-1.p-4.gap-2 {
+		flex: 1;
+		flex-direction: column;
+	}
+	.pemu-list-view li .price-wrap {
+		margin-top: auto;
+	}
+
+	/* Remove focus outline on notice components */
+	.woocommerce-error:focus-visible,
+	.woocommerce-error > div:focus-visible,
+	.pemu-notice-error:focus-visible,
+	.pemu-notice-error > div:focus-visible,
+	.woocommerce-notices-wrapper :focus-visible:not(a):not(button):not(input) {
+		outline: none;
+	}
+}
