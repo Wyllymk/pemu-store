@@ -10,12 +10,13 @@ foreach ($pemu_modules as $m) {
     if (file_exists($path)) require_once $path;
 }
 
-/* Auto-create FAQ page on theme activation */
+/* Auto-create FAQ, Terms & Conditions pages on theme activation */
 add_action('after_switch_theme','pemu_create_default_pages');
 function pemu_create_default_pages(): void {
     $pages = [
-        'faq' => ['title'=>'FAQ','template'=>'page-faq.php'],
-        'privacy-policy' => ['title'=>'Privacy Policy','template'=>''],
+        'faq'                => ['title'=>'FAQ',                 'template'=>'page-faq.php'],
+        'privacy-policy'     => ['title'=>'Privacy Policy',     'template'=>''],
+        'terms-and-conditions'=> ['title'=>'Terms & Conditions', 'template'=>'page-terms.php'],
     ];
     foreach ($pages as $slug => $data) {
         if (!get_page_by_path($slug)) {
@@ -26,6 +27,13 @@ function pemu_create_default_pages(): void {
     // Store business info defaults
     $defaults = ['pemu_whatsapp_number'=>'254707551484','pemu_email'=>'Pemuherbalsupplements@gmail.com','pemu_address'=>'Nairobi, Kenya','pemu_social_tiktok'=>'https://tiktok.com/@pemuventures','pemu_social_instagram'=>'https://instagram.com/pesh_muturi'];
     foreach ($defaults as $k=>$v) { if (!get_option($k)) update_option($k,$v); }
+}
+
+/* Set Terms & Conditions page for WooCommerce */
+add_filter('woocommerce_checkout_terms_and_conditions_page_id','pemu_wc_terms_page_id');
+function pemu_wc_terms_page_id(): int {
+    $page = get_page_by_path('terms-and-conditions');
+    return $page ? $page->ID : 0;
 }
 
 /* x-collapse directive support for Alpine.js accordion (FAQ page) */

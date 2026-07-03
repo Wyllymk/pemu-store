@@ -4,14 +4,14 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-$headline    = get_theme_mod( 'pemu_hero_headline',    'Performance Supplements. Kenyan Prices.' );
-$subheadline = get_theme_mod( 'pemu_hero_subheadline', 'Lab-tested protein, creatine, pre-workout & wellness essentials. Delivered countrywide, paid on M-Pesa.' );
-$cta_primary = get_theme_mod( 'pemu_hero_cta_primary', 'Shop Now' );
-$cta_wa      = get_theme_mod( 'pemu_hero_cta_wa',      'Order via WhatsApp' );
-$badge       = get_theme_mod( 'pemu_hero_badge',       '100% Authentic · Discreet Shipping' );
-$social_text = get_theme_mod( 'pemu_hero_social_proof','Trusted by 12,000+ Kenyans' );
-$hero_image  = get_theme_mod( 'pemu_hero_image',       '' );
-$wa_url      = pemu_whatsapp_url( 'Hi Pemu Health! 👋 I\'d like to place an order.' );
+$headline    = get_option( 'pemu_hero_headline',    'Performance Supplements. Kenyan Prices.' );
+$subheadline = get_option( 'pemu_hero_subheadline', 'Lab-tested protein, creatine, pre-workout & wellness essentials. Delivered countrywide, paid on M-Pesa.' );
+$cta_primary = get_option( 'pemu_hero_cta_primary', 'Shop Now' );
+$cta_wa      = get_option( 'pemu_hero_cta_wa',      'Order via WhatsApp' );
+$badge       = get_option( 'pemu_hero_badge',       '100% Authentic · Discreet Shipping' );
+$social_text = get_option( 'pemu_hero_social_proof','Trusted by 12,000+ Kenyans' );
+$hero_product_image = get_option( 'pemu_hero_product_image', '' );
+$wa_url            = pemu_whatsapp_url( 'Hi Pemu Health! 👋 I\'d like to place an order.' );
 $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop' );
 
 // Split headline at last full stop for two-tone effect
@@ -23,20 +23,10 @@ $headline_2 = ! empty( $parts[2] ) ? $parts[2] : '';
 <section class="relative overflow-hidden min-h-[85vh] flex items-center" aria-labelledby="hero-heading">
 	<!-- Background -->
 	<div class="absolute inset-0 -z-10" aria-hidden="true">
-		<?php if ( $hero_image ) : ?>
-		<img src="<?php echo esc_url( $hero_image ); ?>"
-		     alt=""
-		     class="w-full h-full object-cover"
-		     loading="eager"
-		     fetchpriority="high">
-		<div class="absolute inset-0 bg-white/80 dark:bg-[#0f1923]/90"></div>
-		<?php else : ?>
 		<div class="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-900"></div>
-		<?php endif; ?>
 		<!-- Decorative blobs -->
 		<div class="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-brand-green/10 blur-3xl"></div>
 		<div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-brand-navy/15 blur-3xl"></div>
-
 	</div>
 
 	<div class="max-w-7xl mx-auto px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center w-full">
@@ -111,17 +101,26 @@ $headline_2 = ! empty( $parts[2] ) ? $parts[2] : '';
 				<div class="relative w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-brand-navy to-brand-green p-1 shadow-2xl shadow-brand-green/20">
 					<div class="w-full h-full rounded-3xl bg-white dark:bg-[#162333] flex items-center justify-center">
 						<?php
-						// Try to show a featured product image, fallback to emoji
-						$featured = function_exists( 'wc_get_products' ) ? wc_get_products( [ 'featured' => true, 'limit' => 1, 'status' => 'publish' ] ) : [];
-						if ( ! empty( $featured ) ) :
-							$fp = $featured[0];
-							echo wp_get_attachment_image( $fp->get_image_id(), 'pemu-product-single', false, [
-								'class' => 'w-4/5 h-4/5 object-contain drop-shadow-2xl',
-								'alt'   => esc_attr( $fp->get_name() ),
-							] );
-						else : ?>
-						<span class="text-[160px] drop-shadow-lg select-none">💪</span>
-						<?php endif; ?>
+						// Use admin-uploaded hero product image, or fallback to featured product, or emoji
+						if ( $hero_product_image ) : ?>
+							<img src="<?php echo esc_url( $hero_product_image ); ?>"
+							     alt=""
+							     class="w-4/5 h-4/5 object-contain drop-shadow-2xl"
+							     loading="eager"
+							     fetchpriority="high">
+						<?php
+						else :
+							$featured = function_exists( 'wc_get_products' ) ? wc_get_products( [ 'featured' => true, 'limit' => 1, 'status' => 'publish' ] ) : [];
+							if ( ! empty( $featured ) ) :
+								$fp = $featured[0];
+								echo wp_get_attachment_image( $fp->get_image_id(), 'pemu-product-single', false, [
+									'class' => 'w-4/5 h-4/5 object-contain drop-shadow-2xl',
+									'alt'   => esc_attr( $fp->get_name() ),
+								] );
+							else : ?>
+							<span class="text-[160px] drop-shadow-lg select-none">💪</span>
+							<?php endif;
+						endif; ?>
 					</div>
 				</div>
 				<!-- Floating card: Delivery -->

@@ -3,7 +3,7 @@
  * WooCommerce single-product/tabs/tabs.php — Pemu override
  * Alpine.js pill tabs. Pre-Alpine visibility handled via inline style fallback
  * so description is always visible before JS loads.
- * @version 3.8.1
+ * @version 9.8.0
  */
 defined('ABSPATH') || exit;
 

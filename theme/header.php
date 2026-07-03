@@ -2,11 +2,27 @@
 <html <?php language_attributes(); ?>>
 
 <head>
-    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
+    <link rel="icon" type="image/png"
+        href="<?php echo get_template_directory_uri(); ?>/assets/favicon/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png"
+        href="<?php echo get_template_directory_uri(); ?>/assets/favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml"
+        href="<?php echo get_template_directory_uri(); ?>/assets/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/assets/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="<?php echo get_template_directory_uri(); ?>/assets/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Wilson Devops" />
+    <meta name="application-name" content="Wilson Devops" />
+    <link rel="manifest" href="<?php echo get_template_directory_uri(); ?>/assets/favicon/site.webmanifest" />
+    <meta name="google-site-verification" content="JfBfOEVgeyTxHCjGkZ9DbE0MfmYhGZTCq5TZJ13UeiM" />
+    <meta name="description" content="Full Stack WordPress Engineer and AI Specialist. Nairobi, Kenya." />
+    <meta name="keywords"
+        content="WordPress Developer, Custom Themes, Custom Plugins, Full-Scale Websites, AI, AI Kenya, Web Solutions, Nairobi, Kenya">
+    <meta name="author" content="Wilson Devops">
     <?php wp_head(); ?>
-
-
 </head>
 
 <body
@@ -184,6 +200,9 @@
                         class="pemu-cart-count absolute top-0 right-0 min-w-[20px] h-[20px] px-1 flex items-center justify-center rounded-full bg-brand-green text-white text-[11px] font-bold leading-none ring-2 ring-white dark:ring-slate-800 transition-transform duration-300"
                         aria-hidden="true"></span>
                 </a>
+                <?php /* Hidden element: WC swaps this via fragments to pass count to Alpine. The badge above is Alpine-managed and never touched by WC. */ ?>
+                <span data-pemu-cart-count="<?php echo esc_attr($cart_count); ?>" style="display:none;"
+                    aria-hidden="true"></span>
 
                 <!-- Mobile menu button -->
                 <button @click="mobileMenuOpen=true" :aria-expanded="mobileMenuOpen.toString()" aria-label="Open menu"

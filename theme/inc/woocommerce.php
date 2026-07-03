@@ -44,9 +44,12 @@ add_filter( 'woocommerce_sale_flash', function( $html, $post, $product ){
 add_filter( 'woocommerce_add_to_cart_fragments', 'pemu_cart_fragments' );
 function pemu_cart_fragments( array $fragments ): array {
     $count = WC()->cart->get_cart_contents_count();
-    ob_start();
-    echo '<span class="pemu-cart-count absolute -top-1.5 -right-1.5 min-w-[20px] h-[20px] px-1 flex items-center justify-center rounded-full bg-brand-green text-white text-[11px] font-bold leading-none ring-2 ring-white dark:ring-slate-800 transition-transform duration-300'.( 0===$count?' hidden':'' ).'" aria-hidden="true">'.esc_html($count).'</span>';
-    $fragments['.pemu-cart-count'] = ob_get_clean();
+    // NOTE: Do NOT add a .pemu-cart-count fragment here.
+    // The cart badge is fully managed by Alpine.js ($store.cart.count).
+    // Returning it as a WC fragment causes WooCommerce's jQuery to swap the
+    // DOM node, destroying Alpine's x-data binding and overriding CSS positioning.
+    // Instead, we pass the count via a hidden data element that pemuApplyFragments reads.
+    $fragments['span[data-pemu-cart-count]'] = '<span data-pemu-cart-count="' . esc_attr( $count ) . '" style="display:none;" aria-hidden="true"></span>';
     ob_start();
     echo '<div class="pemu-mini-cart-inner">';
     woocommerce_mini_cart();
@@ -54,6 +57,7 @@ function pemu_cart_fragments( array $fragments ): array {
     $fragments['.pemu-mini-cart-inner'] = ob_get_clean();
     return $fragments;
 }
+
 
 /* 6. BREADCRUMB STYLING */
 add_filter( 'woocommerce_breadcrumb_defaults', function( array $d ): array {

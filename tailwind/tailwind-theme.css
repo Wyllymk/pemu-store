@@ -49,13 +49,12 @@
 	--font-mono:
 		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
 		"Liberation Mono", "Courier New", monospace;
-
+	--font-display: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-body: "Nunito", ui-sans-serif, system-ui, sans-serif;
 	/**
 	 * Add your theme below:
 	 */
 	--color-brand-green: #6db33f;
 	--color-brand-green-dark: #559030;
 	--color-brand-navy: #1e4d6b;
-	--font-display: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-	--font-body: "Nunito", ui-sans-serif, system-ui, sans-serif;
 }

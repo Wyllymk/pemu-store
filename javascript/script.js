@@ -117,9 +117,10 @@ window.Alpine = Alpine;
 				});
 			},
 			updateCount() {
-				const e = document.querySelector('.pemu-cart-count');
-				if (e && e.textContent) {
-					this.count = parseInt(e.textContent.trim(), 10) || 0;
+				// Read from the hidden data element, not the Alpine-managed badge
+				const e = document.querySelector('[data-pemu-cart-count]');
+				if (e) {
+					this.count = parseInt(e.getAttribute('data-pemu-cart-count'), 10) || 0;
 				}
 			},
 			showToast(
@@ -150,22 +151,19 @@ window.Alpine = Alpine;
 		// Helper: read count from fragments returned by WC AJAX
 		window.pemuApplyFragments = function (fragments) {
 			if (!fragments) return;
-			// Find count from the cart-count fragment
 			const tempDiv = document.createElement('div');
 			Object.entries(fragments).forEach(([selector, html]) => {
 				tempDiv.innerHTML = html;
-				const countEl = tempDiv.querySelector('.pemu-cart-count');
-				if (countEl) {
-					const c = parseInt(countEl.textContent.trim(), 10) || 0;
+				// Read count from the hidden data element (never swaps the Alpine badge)
+				const dataEl = tempDiv.querySelector('[data-pemu-cart-count]');
+				if (dataEl) {
+					const c = parseInt(dataEl.getAttribute('data-pemu-cart-count'), 10) || 0;
 					Alpine.store('cart').count = c;
 					Alpine.store('cart').animateBadge();
 				}
-				// For cart-count badges: DON'T replace via outerHTML
-				// — they're Alpine-managed (x-data, x-text, x-show, :class)
-				// — outerHTML would destroy Alpine reactivity + lose positioning classes
-				// Alpine's $store.cart.count reactivity handles updates automatically
+				// For other fragments (mini-cart etc.): update DOM directly
+				// Skip the cart-count badge selector — Alpine owns that element
 				if (selector === '.pemu-cart-count') return;
-				// For other fragments (mini-cart etc.): update DOM
 				document
 					.querySelectorAll(selector)
 					.forEach((el) => (el.outerHTML = html));

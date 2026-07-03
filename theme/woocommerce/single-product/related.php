@@ -1,7 +1,7 @@
 <?php
 /**
  * WooCommerce single-product/related.php — Pemu override
- * @version 3.9.0
+ * @version 10.3.0
  */
 defined('ABSPATH') || exit;
 
