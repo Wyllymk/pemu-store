@@ -98,12 +98,12 @@ defined('ABSPATH') || exit;
             <?php do_action('woocommerce_proceed_to_checkout'); ?>
 
             <a href="<?php echo esc_url(wc_get_checkout_url()); ?>"
-                class="block w-full text-center bg-brand-green hover:bg-brand-green-dark text-white! font-bold py-4 rounded-xl shadow-md shadow-brand-green/30 transition-colors no-underline">
+                class="block w-full text-center bg-brand-green hover:bg-brand-green-dark !text-white dark:!text-white font-bold py-4 rounded-xl shadow-md shadow-brand-green/30 transition-colors no-underline">
                 <?php esc_html_e('Proceed to Checkout','woocommerce'); ?>
             </a>
 
             <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>"
-                class="block w-full text-center text-sm text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors py-2 no-underline">
+                class="block w-full text-center text-sm text-slate-600 dark:text-slate-300 hover:text-brand-green transition-colors py-2 no-underline">
                 ← <?php esc_html_e('Continue Shopping','pemu'); ?>
             </a>
         </div>

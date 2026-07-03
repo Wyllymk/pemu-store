@@ -145,37 +145,7 @@ add_action( 'woocommerce_review_order_before_cart_contents', function() {
     color: #94a3b8;
 }
 
-/* Cart subtotal, shipping, total rows */
-.woocommerce-checkout-review-order-table tr.cart-subtotal td,
-.woocommerce-checkout-review-order-table tr.order-total td {
-    text-align: right;
-    font-weight: 700;
-}
-
-.woocommerce-checkout-review-order-table tr.cart-subtotal th,
-.woocommerce-checkout-review-order-table tr.order-total th {
-    font-weight: 600;
-    color: #475569;
-}
-
-.dark .woocommerce-checkout-review-order-table tr.cart-subtotal th,
-.dark .woocommerce-checkout-review-order-table tr.order-total th {
-    color: #94a3b8;
-}
-
-.woocommerce-checkout-review-order-table tr.order-total td .amount {
-    color: #6DB33F;
-    font-size: 1.125rem;
-    font-weight: 800;
-}
-
-.woocommerce-checkout-review-order-table tr.shipping td {
-    text-align: right;
-}
-
-.woocommerce-checkout-review-order-table tr.shipping td ul#shipping_method li {
-    justify-content: flex-end;
-}
+/* Cart subtotal / shipping / total — now rendered as .pemu-summary-card blocks in review-order.php */
 
 /* State / Country select fields */
 .select2-container .select2-selection--single {
@@ -276,7 +246,7 @@ function pemu_cart_whatsapp_cta(): void {
     $url = pemu_whatsapp_url(pemu_cart_whatsapp_message());
     ?>
 <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer"
-    class="flex items-center justify-center gap-2 w-full mb-3 py-3 px-6 rounded-xl border-2 border-green-500 dark:border-green-400 text-green-500 dark:text-green-400 font-semibold hover:bg-green-500 dark:hover:bg-green-400 hover:text-white dark:hover:text-slate-900 transition-all duration-200">
+    class="flex items-center justify-center gap-2 w-full mb-3 py-3 px-6 rounded-xl border-2 border-green-500 dark:border-green-400 text-green-600 dark:text-green-400 font-semibold hover:bg-green-500 dark:hover:bg-green-400 hover:!text-white dark:hover:!text-slate-900 transition-all duration-200">
     <?php echo pemu_icon('whatsapp',['class'=>'w-5 h-5 shrink-0']); ?>
     <?php esc_html_e('Order via WhatsApp','pemu'); ?>
 </a>
@@ -332,289 +302,336 @@ add_action( 'wp_head', function() {
     if ( ! function_exists( 'is_shop' ) ) return;
     if ( ! is_shop() && ! is_product_category() && ! is_product_tag() && ! is_product() && ! is_front_page() ) return;
     ?>
-    <style>
-        /* WooCommerce "View cart" link that appears after add-to-cart */
-        a.added_to_cart.wc-forward {
-            display: inline-flex !important;
-            align-items: center !important;
-            gap: 0.375rem !important;
-            padding: 0.375rem 0.75rem !important;
-            font-size: 0.75rem !important;
-            font-weight: 700 !important;
-            line-height: 1 !important;
-            border-radius: 9999px !important;
-            background: #1E4D6B !important;
-            color: #fff !important;
-            text-decoration: none !important;
-            white-space: nowrap !important;
-            transition: all 0.15s ease !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
-        }
-        .dark a.added_to_cart.wc-forward {
-            background: #2d5f7e !important;
-            color: #fff !important;
-        }
-        a.added_to_cart.wc-forward::before {
-            content: '';
-            display: inline-block;
-            width: 0.75rem;
-            height: 0.75rem;
-            background: currentColor;
-            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M5 13l4 4L19 7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
-            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M5 13l4 4L19 7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
-            flex-shrink: 0;
-        }
-        a.added_to_cart.wc-forward:hover {
-            background: #153a52 !important;
-            transform: translateY(-1px);
-        }
-        .dark a.added_to_cart.wc-forward:hover {
-            background: #3a7090 !important;
-        }
+<style>
+/* WooCommerce "View cart" link that appears after add-to-cart */
+a.added_to_cart.wc-forward {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.375rem !important;
+    padding: 0.375rem 0.75rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    border-radius: 9999px !important;
+    background: #6db33f !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    transition: all 0.15s ease !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+}
 
-        /* ── Product Reviews tab styling ── */
-        .woocommerce-Tabs-panel--reviews #reviews {
-            max-width: 100%;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews h2.woocommerce-Reviews-title {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews h2.woocommerce-Reviews-title {
-            color: #e2e8f0;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .star-rating {
-            display: flex;
-            gap: 2px;
-            color: #f59e0b;
-            font-size: 0.875rem;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .commentlist {
-            list-style: none;
-            padding: 0;
-            margin: 1.5rem 0;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment {
-            padding: 1.25rem;
-            margin-bottom: 1rem;
-            background: #f8fafc;
-            border-radius: 1rem;
-            border: 1px solid #e2e8f0;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment .comment-text {
-            margin: 0;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment .comment-text .meta {
-            font-size: 0.8125rem;
-            color: #64748b;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment .comment-text .meta {
-            color: #94a3b8;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment .description p {
-            margin: 0.5rem 0 0;
-            font-size: 0.9375rem;
-            color: #334155;
-            line-height: 1.6;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment .description p {
-            color: #cbd5e1;
-        }
-        /* Review form */
-        .woocommerce-Tabs-panel--reviews #reviews #review_form_wrapper {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e2e8f0;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews #review_form_wrapper {
-            border-color: #334155;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews #review_form_wrapper .comment-reply-title {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: #1e293b;
-            display: block;
-            margin-bottom: 1rem;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews #review_form_wrapper .comment-reply-title {
-            color: #e2e8f0;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating {
-            margin-bottom: 1rem;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: #334155;
-            display: block;
-            margin-bottom: 0.375rem;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating label {
-            color: #cbd5e1;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars {
-            display: inline-flex;
-            gap: 4px;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a {
-            color: #cbd5e1;
-            font-size: 1.25rem;
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a.active,
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a:hover {
-            color: #f59e0b;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a {
-            color: #475569;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a.active,
-        .dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a:hover {
-            color: #fbbf24;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-comment label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: #334155;
-            display: block;
-            margin-bottom: 0.375rem;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-comment label {
-            color: #cbd5e1;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-comment textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #1e293b;
-            background: #f8fafc;
-            min-height: 120px;
-            transition: border-color 0.15s;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-comment textarea {
-            background: #1e293b;
-            border-color: #334155;
-            color: #e2e8f0;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-comment textarea:focus {
-            border-color: #6DB33F;
-            outline: none;
-        }
-        /* Submit button */
-        .woocommerce-Tabs-panel--reviews #reviews .submit-review-btn,
-        .woocommerce-Tabs-panel--reviews #reviews .form-submit input#submit {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 0.5rem !important;
-            padding: 0.75rem 2rem !important;
-            font-size: 0.875rem !important;
-            font-weight: 700 !important;
-            line-height: 1 !important;
-            border: none !important;
-            border-radius: 0.75rem !important;
-            background: #6DB33F !important;
-            color: #fff !important;
-            cursor: pointer !important;
-            transition: all 0.2s ease !important;
-            box-shadow: 0 4px 12px rgba(109, 179, 63, 0.3) !important;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .submit-review-btn:hover,
-        .woocommerce-Tabs-panel--reviews #reviews .form-submit input#submit:hover {
-            background: #5a9e32 !important;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(109, 179, 63, 0.4) !important;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-respond .form-submit {
-            margin-top: 1rem;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews p.comment-form-author,
-        .woocommerce-Tabs-panel--reviews #reviews p.comment-form-email {
-            margin-bottom: 1rem;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews p.comment-form-author label,
-        .woocommerce-Tabs-panel--reviews #reviews p.comment-form-email label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: #334155;
-            display: block;
-            margin-bottom: 0.375rem;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews p.comment-form-author label,
-        .dark .woocommerce-Tabs-panel--reviews #reviews p.comment-form-email label {
-            color: #cbd5e1;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews p.comment-form-author input,
-        .woocommerce-Tabs-panel--reviews #reviews p.comment-form-email input {
-            width: 100%;
-            max-width: 400px;
-            padding: 10px 14px;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 14px;
-            color: #1e293b;
-            background: #f8fafc;
-            transition: border-color 0.15s;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews p.comment-form-author input,
-        .dark .woocommerce-Tabs-panel--reviews #reviews p.comment-form-email input {
-            background: #1e293b;
-            border-color: #334155;
-            color: #e2e8f0;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews p.comment-form-author input:focus,
-        .woocommerce-Tabs-panel--reviews #reviews p.comment-form-email input:focus {
-            border-color: #6DB33F;
-            outline: none;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-cookies-consent {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-cookies-consent label {
-            font-size: 0.8125rem;
-            color: #64748b;
-            cursor: pointer;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-cookies-consent label {
-            color: #94a3b8;
-        }
-        .woocommerce-Tabs-panel--reviews #reviews .comment-form-cookies-consent input[type="checkbox"] {
-            width: 1rem;
-            height: 1rem;
-            border-radius: 4px;
-            border: 1px solid #cbd5e1;
-            accent-color: #6DB33F;
-        }
-        /* No reviews yet message */
-        .woocommerce-Tabs-panel--reviews #reviews .woocommerce-noreviews {
-            padding: 1rem 1.25rem;
-            background: #f8fafc;
-            border-radius: 12px;
-            border: 1px dashed #e2e8f0;
-            font-size: 0.875rem;
-            color: #64748b;
-            text-align: center;
-        }
-        .dark .woocommerce-Tabs-panel--reviews #reviews .woocommerce-noreviews {
-            background: #1e293b;
-            border-color: #334155;
-            color: #94a3b8;
-        }
-    </style>
-    <?php
+.dark a.added_to_cart.wc-forward {
+    background: #2d5f7e !important;
+    color: #fff !important;
+}
+
+a.added_to_cart.wc-forward::before {
+    content: '';
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M5 13l4 4L19 7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M5 13l4 4L19 7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+    flex-shrink: 0;
+}
+
+a.added_to_cart.wc-forward:hover {
+    background: #153a52 !important;
+    transform: translateY(-1px);
+}
+
+.dark a.added_to_cart.wc-forward:hover {
+    background: #3a7090 !important;
+}
+
+/* ── Product Reviews tab styling ── */
+.woocommerce-Tabs-panel--reviews #reviews {
+    max-width: 100%;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews h2.woocommerce-Reviews-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews h2.woocommerce-Reviews-title {
+    color: #e2e8f0;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .star-rating {
+    display: flex;
+    gap: 2px;
+    color: #f59e0b;
+    font-size: 0.875rem;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .commentlist {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment {
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    background: #f8fafc;
+    border-radius: 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment .comment-text {
+    margin: 0;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment .comment-text .meta {
+    font-size: 0.8125rem;
+    color: #64748b;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment .comment-text .meta {
+    color: #94a3b8;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment .description p {
+    margin: 0.5rem 0 0;
+    font-size: 0.9375rem;
+    color: #334155;
+    line-height: 1.6;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews .commentlist li.comment .description p {
+    color: #cbd5e1;
+}
+
+/* Review form */
+.woocommerce-Tabs-panel--reviews #reviews #review_form_wrapper {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews #review_form_wrapper {
+    border-color: #334155;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews #review_form_wrapper .comment-reply-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews #review_form_wrapper .comment-reply-title {
+    color: #e2e8f0;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-rating {
+    margin-bottom: 1rem;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-rating label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+    display: block;
+    margin-bottom: 0.375rem;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating label {
+    color: #cbd5e1;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a {
+    color: #cbd5e1;
+    font-size: 1.25rem;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a.active,
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a:hover {
+    color: #f59e0b;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a {
+    color: #475569;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a.active,
+.dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-rating .stars a:hover {
+    color: #fbbf24;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-comment label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+    display: block;
+    margin-bottom: 0.375rem;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-comment label {
+    color: #cbd5e1;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-comment textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1e293b;
+    background: #f8fafc;
+    min-height: 120px;
+    transition: border-color 0.15s;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-comment textarea {
+    background: #1e293b;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-comment textarea:focus {
+    border-color: #6DB33F;
+    outline: none;
+}
+
+/* Submit button */
+.woocommerce-Tabs-panel--reviews #reviews .submit-review-btn,
+.woocommerce-Tabs-panel--reviews #reviews .form-submit input#submit {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    padding: 0.75rem 2rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    border: none !important;
+    border-radius: 0.75rem !important;
+    background: #6DB33F !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 12px rgba(109, 179, 63, 0.3) !important;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .submit-review-btn:hover,
+.woocommerce-Tabs-panel--reviews #reviews .form-submit input#submit:hover {
+    background: #5a9e32 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(109, 179, 63, 0.4) !important;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-respond .form-submit {
+    margin-top: 1rem;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews p.comment-form-author,
+.woocommerce-Tabs-panel--reviews #reviews p.comment-form-email {
+    margin-bottom: 1rem;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews p.comment-form-author label,
+.woocommerce-Tabs-panel--reviews #reviews p.comment-form-email label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+    display: block;
+    margin-bottom: 0.375rem;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews p.comment-form-author label,
+.dark .woocommerce-Tabs-panel--reviews #reviews p.comment-form-email label {
+    color: #cbd5e1;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews p.comment-form-author input,
+.woocommerce-Tabs-panel--reviews #reviews p.comment-form-email input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #1e293b;
+    background: #f8fafc;
+    transition: border-color 0.15s;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews p.comment-form-author input,
+.dark .woocommerce-Tabs-panel--reviews #reviews p.comment-form-email input {
+    background: #1e293b;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews p.comment-form-author input:focus,
+.woocommerce-Tabs-panel--reviews #reviews p.comment-form-email input:focus {
+    border-color: #6DB33F;
+    outline: none;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-cookies-consent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-cookies-consent label {
+    font-size: 0.8125rem;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews .comment-form-cookies-consent label {
+    color: #94a3b8;
+}
+
+.woocommerce-Tabs-panel--reviews #reviews .comment-form-cookies-consent input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    accent-color: #6DB33F;
+}
+
+/* No reviews yet message */
+.woocommerce-Tabs-panel--reviews #reviews .woocommerce-noreviews {
+    padding: 1rem 1.25rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px dashed #e2e8f0;
+    font-size: 0.875rem;
+    color: #64748b;
+    text-align: center;
+}
+
+.dark .woocommerce-Tabs-panel--reviews #reviews .woocommerce-noreviews {
+    background: #1e293b;
+    border-color: #334155;
+    color: #94a3b8;
+}
+</style>
+<?php
 }, 99 );
 
 /* 16. RELATED PRODUCTS */

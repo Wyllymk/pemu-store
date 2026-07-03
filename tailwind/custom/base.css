@@ -142,24 +142,25 @@ body {
 	.pemu-single-product p.price {
 		display: flex;
 		align-items: baseline;
+		justify-content: center;
 		gap: 0.625rem;
 		flex-wrap: wrap;
 		padding: 0.75rem 1rem;
-		background: color-mix(
+		/* background: color-mix(
 			in srgb,
 			var(--color-brand-green) 6%,
 			transparent
-		);
+		); */
 		border: 1px solid
 			color-mix(in srgb, var(--color-brand-green) 20%, transparent);
 		border-radius: 0.75rem;
 	}
 	.dark .pemu-single-product p.price {
-		background: color-mix(
+		/* background: color-mix(
 			in srgb,
 			var(--color-brand-green) 10%,
 			transparent
-		);
+		); */
 	}
 	.pemu-single-product p.price del {
 		color: #94a3b8;

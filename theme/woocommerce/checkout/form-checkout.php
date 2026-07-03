@@ -18,7 +18,7 @@ get_header();
     <!-- Progress steps -->
     <div class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
         <div class="max-w-7xl mx-auto px-4 py-5">
-            <ol class="flex items-center justify-center gap-2 sm:gap-6 text-xs sm:text-sm"
+            <ol class="list-none flex items-center justify-center gap-2 sm:gap-6 text-xs sm:text-sm"
                 aria-label="Checkout progress">
                 <li class="flex items-center gap-2 text-brand-green">
                     <span

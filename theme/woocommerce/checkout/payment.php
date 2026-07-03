@@ -123,18 +123,23 @@ function pemuShowBox(gatewayId) {
 
 // ── Initialise on page load ──────────────────────────────────────────
 // 1. Force-hide ALL boxes (overrides WooCommerce's auto-show via jQuery).
-// 2. Highlight the pre-checked label — but show NO box until user picks one.
-(function init() {
+// 2. Highlight + show the box for whichever gateway is pre-checked.
+function pemuInitPayment() {
   pemuHideAllBoxes();
   var checked = document.querySelector('#payment .wc_payment_methods input[type="radio"]:checked');
-  if (checked) pemuUpdateLabels(checked.value);
+  if (checked) {
+    pemuUpdateLabels(checked.value);
+    pemuShowBox(checked.value);
+  }
+}
 
-  // WooCommerce's checkout.js runs asynchronously and may call .show()
-  // after this script runs. Run again after a short delay to win the race.
-  setTimeout(pemuHideAllBoxes, 0);
-  setTimeout(pemuHideAllBoxes, 50);
-  setTimeout(pemuHideAllBoxes, 200);
-})();
+pemuInitPayment();
+
+// WooCommerce's checkout.js runs asynchronously and may call .show()
+// after this script runs. Re-run after short delays to win the race.
+setTimeout(pemuInitPayment, 0);
+setTimeout(pemuInitPayment, 50);
+setTimeout(pemuInitPayment, 200);
 
 // ── User selects a payment method ────────────────────────────────────
 document.addEventListener('change', function(e) {
@@ -145,13 +150,11 @@ document.addEventListener('change', function(e) {
 });
 
 // ── After WooCommerce AJAX refreshes checkout ─────────────────────────
-// Restore highlight but keep boxes hidden — the user must re-select.
+// Restore highlight AND show the box for the currently-checked gateway.
 window.addEventListener('wc:updated_checkout', function() {
-  pemuHideAllBoxes();
-  var checked = document.querySelector('#payment .wc_payment_methods input[type="radio"]:checked');
-  if (checked) pemuUpdateLabels(checked.value);
+  pemuInitPayment();
   // Extra guard — WC reruns its own init after updated_checkout
-  setTimeout(pemuHideAllBoxes, 0);
-  setTimeout(pemuHideAllBoxes, 100);
+  setTimeout(pemuInitPayment, 0);
+  setTimeout(pemuInitPayment, 100);
 });
 </script>

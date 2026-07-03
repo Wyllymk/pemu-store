@@ -1,0 +1,235 @@
+# Copyright (C) 2026 Wilson Mbuthia
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Pemu Ventures 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/pemu-ventures\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-03T16:01:53+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: pemu-ventures\n"
+
+#. Theme Name of the theme
+#: theme
+msgid "Pemu Ventures"
+msgstr ""
+
+#. Theme URI of the theme
+#: theme
+msgid "https://pemuhealthsupplements.co.ke"
+msgstr ""
+
+#. Description of the theme
+#: theme
+msgid "A custom theme based on _tw"
+msgstr ""
+
+#. Author of the theme
+#: theme
+msgid "Wilson Mbuthia"
+msgstr ""
+
+#. Author URI of the theme
+#: theme
+msgid "https://wilsondevops.com"
+msgstr ""
+
+#. translators: 1: title.
+#: theme/comments.php:34
+#, php-format
+msgid "One comment on &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#. translators: 1: comment count number, 2: title.
+#: theme/comments.php:42
+#, php-format
+msgctxt "comments title"
+msgid "%1$s comment on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s comments on &ldquo;%2$s&rdquo;"
+msgstr[0] ""
+msgstr[1] ""
+
+#: theme/comments.php:72
+msgid "Comments are closed."
+msgstr ""
+
+#: theme/inc/template-functions.php:32
+msgid "Submit Review"
+msgstr ""
+
+#: theme/inc/template-functions.php:48
+msgid "Category Archives: "
+msgstr ""
+
+#: theme/inc/template-functions.php:50
+msgid "Tag Archives: "
+msgstr ""
+
+#: theme/inc/template-functions.php:52
+msgid "Author Archives: "
+msgstr ""
+
+#: theme/inc/template-functions.php:54
+msgid "Yearly Archives: "
+msgstr ""
+
+#: theme/inc/template-functions.php:54
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr ""
+
+#: theme/inc/template-functions.php:56
+msgid "Monthly Archives: "
+msgstr ""
+
+#: theme/inc/template-functions.php:56
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr ""
+
+#: theme/inc/template-functions.php:58
+msgid "Daily Archives: "
+msgstr ""
+
+#. translators: %s: Post type singular name
+#. translators: %s: Taxonomy singular name
+#: theme/inc/template-functions.php:63
+#: theme/inc/template-functions.php:70
+#, php-format
+msgid "%s Archives"
+msgstr ""
+
+#: theme/inc/template-functions.php:74
+msgid "Archives:"
+msgstr ""
+
+#. translators: %s: Name of current post.
+#: theme/inc/template-functions.php:104
+#, php-format
+msgid "Continue reading %s"
+msgstr ""
+
+#: theme/inc/template-functions.php:138
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: theme/inc/template-functions.php:140
+msgid "Your comment is awaiting moderation. This is a preview; your comment will be visible after it has been approved."
+msgstr ""
+
+#. translators: %s: Comment author link.
+#: theme/inc/template-functions.php:161
+#, php-format
+msgid "%s <span class=\"says\">says:</span>"
+msgstr ""
+
+#. translators: 1: Comment date, 2: Comment time.
+#: theme/inc/template-functions.php:176
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: theme/inc/template-functions.php:183
+msgid "Edit"
+msgstr ""
+
+#: theme/inc/template-tags.php:44
+msgid "Posted by"
+msgstr ""
+
+#. translators: %s: Name of current post. Only visible to screen readers.
+#: theme/inc/template-tags.php:58
+#, php-format
+msgid "Leave a comment<span class=\"sr-only\"> on %s</span>"
+msgstr ""
+
+#. translators: used between list items, there is a space after the comma.
+#: theme/inc/template-tags.php:80
+#: theme/inc/template-tags.php:91
+#: theme/inc/template-tags.php:141
+#: theme/inc/template-tags.php:152
+msgid ", "
+msgstr ""
+
+#: theme/inc/template-tags.php:85
+#: theme/inc/template-tags.php:146
+msgid "Posted in"
+msgstr ""
+
+#: theme/inc/template-tags.php:96
+#: theme/inc/template-tags.php:157
+msgid "Tags:"
+msgstr ""
+
+#. translators: %s: Name of current post. Only visible to screen readers.
+#: theme/inc/template-tags.php:112
+#: theme/inc/template-tags.php:173
+#, php-format
+msgid "Edit <span class=\"sr-only\">%s</span>"
+msgstr ""
+
+#: theme/inc/template-tags.php:264
+msgid "Newer posts"
+msgstr ""
+
+#: theme/inc/template-tags.php:265
+msgid "Older posts"
+msgstr ""
+
+#. Template Name of the theme
+msgid "FAQ Page"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Privacy Policy Page"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Terms & Conditions"
+msgstr ""
+
+#: theme/single.php:27
+msgid "Next Post"
+msgstr ""
+
+#: theme/single.php:28
+msgid "Next post:"
+msgstr ""
+
+#: theme/single.php:30
+msgid "Previous Post"
+msgstr ""
+
+#: theme/single.php:31
+msgid "Previous post:"
+msgstr ""
+
+#: theme/theme.json
+msgctxt "Color name"
+msgid "Background"
+msgstr ""
+
+#: theme/theme.json
+msgctxt "Color name"
+msgid "Foreground"
+msgstr ""
+
+#: theme/theme.json
+msgctxt "Color name"
+msgid "Primary"
+msgstr ""
+
+#: theme/theme.json
+msgctxt "Color name"
+msgid "Secondary"
+msgstr ""
+
+#: theme/theme.json
+msgctxt "Color name"
+msgid "Tertiary"
+msgstr ""
