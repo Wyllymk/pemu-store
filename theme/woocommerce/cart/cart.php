@@ -2,7 +2,7 @@
 /**
  * WooCommerce cart/cart.php — Pemu override
  * ALL WC hooks preserved.
- * @version 10.1.0
+ * @version 10.8.0
  */
 defined('ABSPATH') || exit;
 get_header();

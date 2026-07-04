@@ -17,11 +17,6 @@
     <meta name="apple-mobile-web-app-title" content="Wilson Devops" />
     <meta name="application-name" content="Wilson Devops" />
     <link rel="manifest" href="<?php echo get_template_directory_uri(); ?>/assets/favicon/site.webmanifest" />
-    <meta name="google-site-verification" content="JfBfOEVgeyTxHCjGkZ9DbE0MfmYhGZTCq5TZJ13UeiM" />
-    <meta name="description" content="Full Stack WordPress Engineer and AI Specialist. Nairobi, Kenya." />
-    <meta name="keywords"
-        content="WordPress Developer, Custom Themes, Custom Plugins, Full-Scale Websites, AI, AI Kenya, Web Solutions, Nairobi, Kenya">
-    <meta name="author" content="Wilson Devops">
     <?php wp_head(); ?>
 </head>
 

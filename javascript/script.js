@@ -26,21 +26,17 @@ window.Alpine = Alpine;
 			'(prefers-color-scheme: dark)'
 		).matches;
 		var isDark =
-			preference === 'dark' ||
-			(preference === 'system' && systemDark);
+			preference === 'dark' || (preference === 'system' && systemDark);
 		html.classList.toggle('dark', isDark);
 		html.classList.toggle('light', !isDark);
 		html.setAttribute('data-theme', isDark ? 'dark' : 'light');
 	}
-	var saved = localStorage.getItem('pemu-theme') || 'system';
+	var saved = localStorage.getItem('pemu-theme') || 'light';
 	applyTheme(saved);
 	window
 		.matchMedia('(prefers-color-scheme: dark)')
 		.addEventListener('change', function () {
-			if (
-				(localStorage.getItem('pemu-theme') || 'system') ===
-				'system'
-			) {
+			if ((localStorage.getItem('pemu-theme') || 'light') === 'system') {
 				applyTheme('system');
 			}
 		});
@@ -119,7 +115,9 @@ window.Alpine = Alpine;
 				// Read from the hidden data element, not the Alpine-managed badge
 				const e = document.querySelector('[data-pemu-cart-count]');
 				if (e) {
-					this.count = parseInt(e.getAttribute('data-pemu-cart-count'), 10) || 0;
+					this.count =
+						parseInt(e.getAttribute('data-pemu-cart-count'), 10) ||
+						0;
 				}
 			},
 			showToast(
@@ -156,7 +154,11 @@ window.Alpine = Alpine;
 				// Read count from the hidden data element (never swaps the Alpine badge)
 				const dataEl = tempDiv.querySelector('[data-pemu-cart-count]');
 				if (dataEl) {
-					const c = parseInt(dataEl.getAttribute('data-pemu-cart-count'), 10) || 0;
+					const c =
+						parseInt(
+							dataEl.getAttribute('data-pemu-cart-count'),
+							10
+						) || 0;
 					Alpine.store('cart').count = c;
 					Alpine.store('cart').animateBadge();
 				}
